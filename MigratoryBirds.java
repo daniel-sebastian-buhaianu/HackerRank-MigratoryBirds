@@ -10,31 +10,32 @@ import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-class Result {
-
-    /*
-     * Complete the 'migratoryBirds' function below.
-     *
-     * The function is expected to return an INTEGER.
-     * The function accepts INTEGER_ARRAY arr as parameter.
-     */
-
-    public static int migratoryBirds(List<Integer> arr) {
-        int[] count = new int[6];
-        int maxCount = 0;
-        int lowestMaxID = 0;
-        for (Integer id : arr) {
-            count[id]++;
-            if (count[id] > maxCount) {
-                maxCount = count[id];
-                lowestMaxID = id;
-            } else if (count[id] == maxCount && id < lowestMaxID) {
-                lowestMaxID = id;
+class Result
+{
+    public static int migratoryBirds(List<Integer> arr)
+    {
+        HashMap<Integer, Integer> birdCounter = new HashMap<>();
+        int maxFrequency = 0;
+        int mostCommonBird = Integer.MAX_VALUE;
+        
+        for (int bird : arr)
+        {
+            int birdCount = birdCounter.getOrDefault(bird, 0) + 1;
+            birdCounter.put(bird, birdCount);
+            
+            if (birdCount > maxFrequency)
+            {
+                maxFrequency = birdCount;
+                mostCommonBird = bird;
+            }
+            else if (birdCount == maxFrequency && bird < mostCommonBird)
+            {
+                mostCommonBird = bird;
             }
         }
-        return lowestMaxID;
+        
+        return mostCommonBird;
     }
-
 }
 
 public class Solution {
